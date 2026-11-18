@@ -1,16 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-
+  import { getWindowIcon, type StartMenuApp } from "#lib/ts/tb/tbfunc.ts";
   import type { WindowManager } from "#lib/ts/window-manager.svelte.ts";
-
   import "#lib/css/taskbar.css";
-
-  type StartMenuApp = {
-    id: string;
-    title: string;
-    description?: string;
-    icon?: string;
-  };
 
   let {
     manager,
@@ -37,7 +29,6 @@
     updateClock();
 
     const timer = window.setInterval(updateClock, 15_000);
-
     return () => window.clearInterval(timer);
   });
 
@@ -56,22 +47,6 @@
       manager.minimizeWindow(id);
     }
   }
-
-  function getWindowIcon(appId: string) {
-    const icons: Record<string, string> = {
-      explorer: "📁",
-      terminal: "⌨",
-      trigle: "🔍",
-      notepad: "📝",
-      paint: "🎨",
-      gallery: "🖼",
-      music: "♫",
-      test: "▣",
-    };
-
-    return icons[appId] ?? "▣";
-  }
-
   // -------------------------
   // Start Menu
   // -------------------------
