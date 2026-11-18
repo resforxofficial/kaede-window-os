@@ -6,7 +6,7 @@
 </script>
 
 <svelte:head>
-  <title>Jiyeon OS</title>
+  <title>Kaede OS</title>
   <link rel="icon" href={favicon} />
 </svelte:head>
 

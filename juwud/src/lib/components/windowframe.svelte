@@ -9,6 +9,7 @@
     ResizeDirection,
     ResizeState,
   } from "#lib/ts/wd/wdts.ts";
+  import * as wd from "#lib/ts/wd/wdfunc.ts";
 
   let {
     win,
@@ -22,6 +23,7 @@
 
   let dragState = $state<DragState | null>(null);
   let resizeState = $state<ResizeState | null>(null);
+  let frameElement: HTMLElement | null = null;
 
   const resizeDirections: ResizeDirection[] = [
     "n",
@@ -43,6 +45,7 @@
 
 <section
   class="window-frame"
+  bind:this={frameElement}
   class:active={isActive}
   class:maximized={win.isMaximized}
   style:left={win.isMaximized ? "0px" : `${win.rect.x}px`}
@@ -57,15 +60,23 @@
   <!-- svelte-ignore a11y_no_static_element_interactions -->
   <header
     class="window-titlebar"
-    onpointerdown={startDrag}
-    onpointermove={moveDrag}
-    onpointerup={endDrag}
-    onpointercancel={endDrag}
+    onpointerdown={(event) => {
+      dragState = wd.startDrag(event, win, manager, dragState);
+    }}
+    onpointermove={(event) => {
+      wd.moveDrag(event, frameElement, dragState, win, manager);
+    }}
+    onpointerup={(event) => {
+      dragState = wd.endDrag(event, dragState);
+    }}
+    onpointercancel={(event) => {
+      dragState = wd.endDrag(event, dragState);
+    }}
     ondblclick={(event) => {
       if (event.target instanceof Element && event.target.closest("button"))
         return;
 
-      toggleMaximize();
+      wd.toggleMaximize(manager, win);
     }}
   >
     <div class="window-title">
@@ -93,7 +104,7 @@
         aria-label={win.isMaximized ? "복원" : "최대화"}
         onclick={(event) => {
           event.stopPropagation();
-          toggleMaximize();
+          wd.toggleMaximize(manager, win);
         }}
       >
         {#if win.isMaximized}
@@ -128,10 +139,24 @@
       <div
         class={`resize-handle ${direction}`}
         aria-hidden="true"
-        onpointerdown={(event) => startResize(event, direction)}
-        onpointermove={moveResize}
-        onpointerup={endResize}
-        onpointercancel={endResize}
+        onpointerdown={(event) => {
+          resizeState = wd.startResize(
+            event,
+            direction,
+            win,
+            manager,
+            resizeState,
+          );
+        }}
+        onpointermove={(event) => {
+          wd.moveResize(event, frameElement, resizeState, win, manager);
+        }}
+        onpointerup={(event) => {
+          resizeState = wd.endResize(event, resizeState);
+        }}
+        onpointercancel={(event) => {
+          resizeState = wd.endResize(event, resizeState);
+        }}
       ></div>
     {/each}
   {/if}
