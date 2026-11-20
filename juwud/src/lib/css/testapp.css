@@ -1,0 +1,63 @@
+.test-app {
+    min-height: 100%;
+    box-sizing: border-box;
+
+    padding: 24px;
+
+    color: #26394e;
+    background: #f5f8fc;
+}
+
+.test-app-header {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid #dce5ef;
+}
+
+.test-app-icon {
+    font-size: 36px;
+}
+
+.test-app-header h2 {
+    margin: 0;
+    font-size: 18px;
+}
+
+.test-app-header p {
+    margin: 5px 0 0;
+    color: #72849a;
+    font-size: 12px;
+}
+
+.test-app-content {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.test-app-content section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    padding: 12px;
+
+    border: 1px solid #dce5ef;
+    border-radius: 5px;
+
+    background: white;
+}
+
+.test-app-content span {
+    color: #8291a3;
+    font-size: 11px;
+}
+
+.test-app-content strong {
+    font-size: 13px;
+    overflow-wrap: anywhere;
+}
