@@ -6,8 +6,8 @@
   import Desktop from "#lib/components/deskt.svelte";
   import Taskbar from "#lib/components/taskbar.svelte";
   import "#lib/css/mainpage.css";
-  import { onMount } from 'svelte';
-  import { VirtualFileSystem } from '#lib/ts/filesystem.svelte.ts';
+  import { onMount } from "svelte";
+  import { VirtualFileSystem } from "#lib/ts/filesystem.svelte.ts";
 
   const windowManager = new WindowManager();
   const appManager = new ApplicationManager(windowManager);
@@ -22,8 +22,16 @@
       x: 16,
       y: 16,
     },
+    {
+      id: "terminal",
+      title: "명령 프롬포트",
+      appId: "terminal",
+      icon: "⌨️",
+      x: 16,
+      y: 120,
+    },
   ];
-  const filesystem = new VirtualFileSystem();
+  const fileSystem = new VirtualFileSystem();
 
   // 프로그램 실행 요청
   function launchApp(appId: string) {
@@ -31,7 +39,7 @@
   }
 
   onMount(() => {
-    filesystem.initialize();
+    fileSystem.initialize();
   });
 </script>
 
@@ -44,7 +52,7 @@
 
         <WindowFrame {win} manager={windowManager}>
           {#if App}
-            <App windowId={win.id} />
+            <App windowId={win.id} {fileSystem} />
           {:else}
             <div class="app-loading">프로그램을 불러오는 중...</div>
           {/if}

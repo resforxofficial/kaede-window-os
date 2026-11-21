@@ -1,19 +1,19 @@
-
 import type { Component } from "svelte";
-
+import type { VirtualFileSystem } from "#lib/ts/filesystem.svelte.ts";
 import type { OpenWindowOptions } from "#lib/types/oscore.ts";
 
-// 모든 OS 프로그램이 공통으로 받는 Props
-export type AppComponent = Component<{
+export type AppProps = {
     windowId: string;
-}>;
+    fileSystem: VirtualFileSystem;
+};
+
+export type AppComponent = Component<AppProps>;
 
 export interface AppDefinition {
     id: string;
     title: string;
     description: string;
     icon: string;
-
     defaultWindow: OpenWindowOptions;
 
     load: () => Promise<{
@@ -36,6 +36,22 @@ export const appRegistry = {
         },
 
         load: () => import("#lib/apps/test-app.svelte"),
+    },
+
+    terminal: {
+        id: "terminal",
+        title: "명령 프롬프트",
+        description: "명령어로 OS 관리",
+        icon: "⌨️",
+
+        defaultWindow: {
+            width: 760,
+            height: 500,
+            minWidth: 480,
+            minHeight: 320,
+        },
+
+        load: () => import("#lib/apps/terminal.svelte"),
     },
 } satisfies Record<string, AppDefinition>;
 
