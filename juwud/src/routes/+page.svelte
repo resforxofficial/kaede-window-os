@@ -30,6 +30,14 @@
       x: 16,
       y: 120,
     },
+    {
+      id: "explorer",
+      title: "파일 탐색기",
+      appId: "explorer",
+      icon: "📁",
+      x: 16,
+      y: 224,
+    }
   ];
   const fileSystem = new VirtualFileSystem();
 

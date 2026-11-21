@@ -124,28 +124,24 @@ export class VirtualFileSystem {
     // -------------------------
     // Path Management
     // -------------------------
-
     #resolveSegments(path: string, cwd = "C:\\"): string[] {
         const normalized = path.trim().replaceAll("/", "\\");
-
         if (!normalized) {
             throw new Error("경로를 입력해 주세요.");
         }
-        const drive = normalized.match(/^([a-zA-Z]):/);
 
+        const drive = normalized.match(/^([a-zA-Z]):/);
         if (drive && drive[1].toUpperCase() !== "C") {
             throw new Error("지원하지 않는 드라이브입니다.");
         }
 
         const absolute = normalized.startsWith("\\") || drive !== null;
-        const combined = absolute
-            ? normalized.replace(/^[a-zA-Z]:/, "")
-            : `${cwd}\\${normalized}`;
+        const base = cwd.trim().replaceAll("/", "\\").replace(/^[a-zA-Z]:/, "");
+        const combined = absolute ? normalized.replace(/^[a-zA-Z]:/, "") : `${base}\\${normalized}`;
 
         const segments: string[] = [];
         for (const segment of combined.split("\\")) {
             if (!segment || segment === ".") continue;
-
             if (segment === "..") {
                 segments.pop();
                 continue;

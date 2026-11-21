@@ -1,15 +1,15 @@
 <script lang="ts">
   let {
     windowId,
-    filesystem,
+    fileSystem,
   }: {
     windowId: string;
-    filesystem: VirtualFileSystem;
+    fileSystem: VirtualFileSystem;
   } = $props();
 
   const startedAt = new Date().toLocaleTimeString("ko-KR");
   // svelte-ignore state_referenced_locally
-  const rootExists = filesystem.exists("C:\\");
+  const rootExists = fileSystem.exists("C:\\");
   import "#lib/css/testapp.css";
   import type { VirtualFileSystem } from "#lib/ts/filesystem.svelte.ts";
 </script>
