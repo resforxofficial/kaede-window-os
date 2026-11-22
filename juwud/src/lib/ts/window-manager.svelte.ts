@@ -18,6 +18,7 @@ export class WindowManager {
         appId: string,
         title: string,
         options: OpenWindowOptions = {},
+        appData: Record<string, unknown> = {}
     ): string {
         const offset = (this.windows.length % 8) * 28;
 
@@ -42,6 +43,7 @@ export class WindowManager {
 
             isMinimized: false,
             isMaximized: false,
+            appData: { ...appData },
         };
 
         this.windows = [...this.windows, window];

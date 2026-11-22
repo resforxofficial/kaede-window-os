@@ -29,8 +29,10 @@ export class ApplicationManager {
     // -------------------------
     // Application Launch
     // -------------------------
-
-    async launch(appId: string): Promise<string | null> {
+    async launch(
+        appId: string,
+        options: { initialPath?: string } = {},
+    ): Promise<string | null> {
         const definition = appRegistry[appId as AppId];
 
         if (!definition) {
@@ -39,17 +41,13 @@ export class ApplicationManager {
         }
 
         try {
-            const component = await this.#loadApp(definition);
+            await this.#loadApp(definition);
 
-            if (!component) {
-                throw new Error("프로그램 컴포넌트를 불러오지 못했습니다.");
-            }
-
-            // 프로그램 로드가 완료된 후 창 생성
             const windowId = this.windowManager.openWindow(
                 definition.id,
                 definition.title,
                 definition.defaultWindow,
+                { ...options },
             );
 
             this.lastError = null;

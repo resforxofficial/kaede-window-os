@@ -19,6 +19,7 @@ export interface WindowState {
 
     isMinimized: boolean;
     isMaximized: boolean;
+    appData: Record<string, unknown>;
 }
 
 export interface OpenWindowOptions {

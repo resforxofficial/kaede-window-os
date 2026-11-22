@@ -24,13 +24,18 @@
   let {
     windowId,
     fileSystem,
+    initialPath,
+    onOpenFile,
   }: {
     windowId: string;
     fileSystem: VirtualFileSystem;
+    initialPath?: string;
+    onOpenFile?: (path: string) => void;
   } = $props();
 
   // Explorer State
-  const state = $state(createExplorerState());
+  // svelte-ignore state_referenced_locally
+  const state = $state(createExplorerState(initialPath));
 
   // Derived State
   const selectedNode = $derived(getSelectedNode(state));
@@ -117,40 +122,6 @@
   <!-- Explorer Body -->
   <div class="explorer-body">
     <!-- Sidebar -->
-    <aside class="explorer-sidebar">
-      <div class="sidebar-heading">즐겨찾기</div>
-
-      <button
-        type="button"
-        onclick={() => navigate(state, fileSystem, "C:\\Users\\Guest\\Desktop")}
-      >
-        <span>🖥️</span> 바탕 화면
-      </button>
-
-      <button
-        type="button"
-        onclick={() => navigate(state, fileSystem, "C:\\Users\\Guest\\Documents")}
-      >
-        <span>📁</span> 문서
-      </button>
-
-      <button
-        type="button"
-        onclick={() => navigate(state, fileSystem, "C:\\Users\\Guest\\Pictures")}
-      >
-        <span>🖼️</span> 사진
-      </button>
-
-      <button type="button" onclick={() => navigate(state, fileSystem, "C:\\Users\\Guest\\Music")}>
-        <span>🎵</span> 음악
-      </button>
-
-      <div class="sidebar-heading">컴퓨터</div>
-
-      <button type="button" onclick={() => navigate(state, fileSystem, "C:\\")}>
-        <span>💽</span> 로컬 디스크 (C:)
-      </button>
-    </aside>
 
     <!-- Main Content -->
     <section class="explorer-main">
@@ -170,7 +141,7 @@
               class="file-row"
               class:selected={state.selectedId === item.id}
               onclick={() => selectNode(state, item)}
-              ondblclick={() => openNode(state, fileSystem, item)}
+              ondblclick={() => openNode(state, fileSystem, item, onOpenFile)}
             >
               <span class="file-name">
                 <span class="file-icon">{getIcon(item)}</span>

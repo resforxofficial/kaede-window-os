@@ -42,14 +42,10 @@
 
     flex-shrink: 0;
 
-    height: 36px;
-    padding: 0 5px 0 12px;
+    height: 30px;
+    padding: 0 5px 0 10px;
 
-    background: linear-gradient(180deg,
-            #c9dff4 0%,
-            #82b3de 14%,
-            #397bb9 52%,
-            #20558e 100%);
+    background: linear-gradient(180deg, #ffe58a 0%, #ffc935 55%, #e6a900 100%);
 
     border-bottom: 1px solid #184a7d;
 
@@ -93,7 +89,7 @@
     align-items: flex-start;
 
     height: 100%;
-    padding-top: 3px;
+    padding-top: 2px;
     gap: 2px;
 }
 
@@ -102,8 +98,8 @@
     align-items: center;
     justify-content: center;
 
-    width: 27px;
-    height: 21px;
+    width: 25px;
+    height: 20px;
 
     padding: 0;
 
@@ -131,7 +127,7 @@
 }
 
 .window-button.close {
-    width: 46px;
+    width: 42px;
 
     background: linear-gradient(180deg, #f6aaa0, #d94a3e 50%, #ae2018);
 

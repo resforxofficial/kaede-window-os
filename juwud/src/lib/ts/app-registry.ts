@@ -5,6 +5,8 @@ import type { OpenWindowOptions } from "#lib/types/oscore.ts";
 export type AppProps = {
     windowId: string;
     fileSystem: VirtualFileSystem;
+    initialPath?: string;
+    onOpenFile?: (path: string) => void;
 };
 
 export type AppComponent = Component<AppProps>;
@@ -45,8 +47,8 @@ export const appRegistry = {
         icon: "⌨️",
 
         defaultWindow: {
-            width: 760,
-            height: 500,
+            width: 700,
+            height: 450,
             minWidth: 480,
             minHeight: 320,
         },
@@ -60,13 +62,28 @@ export const appRegistry = {
         description: "파일 폴더 및 관리",
         icon: "📁",
         defaultWindow: {
-            width: 900,
-            height: 550,
+            width: 750,
+            height: 500,
             minWidth: 560,
             minHeight: 380,
         },
 
         load: () => import("#lib/apps/explorer.svelte"),
+    },
+
+    notepad: {
+        id: "notepad",
+        title: "메모장",
+        description: "텍스트 파일 편집",
+        icon: "📝",
+        defaultWindow: {
+            width: 700,
+            height: 500,
+            minWidth: 420,
+            minHeight: 320,
+        },
+
+        load: () => import("#lib/apps/notepad.svelte")
     },
 } satisfies Record<string, AppDefinition>;
 

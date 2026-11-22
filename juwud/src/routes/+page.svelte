@@ -37,13 +37,29 @@
       icon: "📁",
       x: 16,
       y: 224,
-    }
+    },
+    {
+      id: "notepad",
+      title: "메모장",
+      appId: "notepad",
+      icon: "📝",
+      x: 16,
+      y: 328,
+    },
   ];
   const fileSystem = new VirtualFileSystem();
 
   // 프로그램 실행 요청
   function launchApp(appId: string) {
     void appManager.launch(appId);
+  }
+
+  function openFile(path: string) {
+    console.log("Opening File: ", path);
+
+    void appManager.launch("notepad", {
+      initialPath: path,
+    });
   }
 
   onMount(() => {
@@ -57,12 +73,21 @@
     {#each windowManager.windows as win (win.id)}
       {#if !win.isMinimized}
         {@const App = appManager.loadedApps[win.appId]}
+        {@const initialPath =
+          typeof win.appData.initialPath === "string"
+            ? win.appData.initialPath
+            : undefined}
 
         <WindowFrame {win} manager={windowManager}>
           {#if App}
-            <App windowId={win.id} {fileSystem} />
+            <App
+              windowId={win.id}
+              {fileSystem}
+              {initialPath}
+              onOpenFile={openFile}
+            />
           {:else}
-            <div class="app-loading">프로그램을 불러오는 중...</div>
+            <div>프로그램 로딩 중...</div>
           {/if}
         </WindowFrame>
       {/if}

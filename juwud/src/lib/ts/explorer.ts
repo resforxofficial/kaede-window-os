@@ -44,7 +44,7 @@ const TEXT_EXTENSIONS = [
 // Initial State
 // -------------------------
 
-export function createExplorerState(): ExplorerState {
+export function createExplorerState(initalPath = INITIAL_PATH): ExplorerState {
     return {
         currentPath: INITIAL_PATH,
         addressValue: INITIAL_PATH,
@@ -277,18 +277,15 @@ export function selectNode(state: ExplorerState, node: FsNode): void {
     state.selectedId = node.id;
 }
 
-export function openNode(
-    state: ExplorerState,
-    fileSystem: VirtualFileSystem,
-    node: FsNode,
-): void {
+export function openNode(state: ExplorerState, filesystem: VirtualFileSystem, node: FsNode, onOpenFile?: (path: string) => void): void {
     if (node.type === "directory") {
-        navigate(state, fileSystem, joinPath(state.currentPath, node.name));
+        navigate(state, filesystem, joinPath(state.currentPath, node.name));
         return;
     }
 
-    selectNode(state, node);
-    state.statusMessage = `${node.name} 선택됨`;
+    const path = joinPath(state.currentPath, node.name);
+    state.statusMessage = `${node.name} 열기`;
+    onOpenFile?.(path);
 }
 
 // -------------------------
