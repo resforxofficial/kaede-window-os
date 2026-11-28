@@ -85,6 +85,21 @@ export const appRegistry = {
 
         load: () => import("#lib/apps/notepad.svelte")
     },
+
+    trigle: {
+        id: "trigle",
+        title: "Tri(ples)gle",
+        description: "tripleS 전용 검색 엔진",
+        icon: "🔍",
+        defaultWindow: {
+            width: 750,
+            height: 500,
+            minWidth: 520,
+            minHeight: 380,
+        },
+
+        load: () => import("#lib/apps/trigle.svelte"),
+    },
 } satisfies Record<string, AppDefinition>;
 
 export type AppId = keyof typeof appRegistry;

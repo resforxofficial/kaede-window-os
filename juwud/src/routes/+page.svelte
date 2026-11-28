@@ -46,6 +46,14 @@
       x: 16,
       y: 328,
     },
+    {
+      id: "trigle",
+      title: "Tri(ples)gle",
+      appId: "trigle",
+      icon: "🔍",
+      x: 120,
+      y: 16,
+    },
   ];
   const fileSystem = new VirtualFileSystem();
 
